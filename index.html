@@ -23,3 +23,140 @@
   <p>Я учусь работать с Git и GitHub.</p>
 </body>
 </html>
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторная работа №2</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        form div {
+            margin-bottom: 10px;
+        }
+        /* Стили для текстовых блоков ошибок (Шаг 7) */
+        .error {
+            color: red;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        #user-list li {
+            cursor: pointer;
+            padding: 4px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Регистрация</h1>
+
+    <!-- Форма регистрации (Шаг 1 и Шаг 7) -->
+    <form id="register-form">
+        <div>
+            <label for="name">Имя:</label>
+            <input type="text" id="name" name="name">
+            <span class="error" id="name-error"></span>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+            <span class="error" id="email-error"></span>
+        </div>
+        <div>
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" name="password">
+            <span class="error" id="password-error"></span>
+        </div>
+        <button type="submit">Зарегистрироваться</button>
+    </form>
+
+    <h2>Список зарегистрированных (демо)</h2>
+    <ul id="user-list">
+        <li>demo@example.com (демо)</li>
+    </ul>
+
+    <script>
+        // Шаг 7: Функция валидации с выводом сообщений в блоки ошибок
+        function validateForm(name, email, password) {
+            // Очищаем все ошибки перед проверкой
+            document.getElementById("name-error").textContent = "";
+            document.getElementById("email-error").textContent = "";
+            document.getElementById("password-error").textContent = "";
+
+            let isValid = true;
+
+            // Проверка имени на пустоту
+            if (!name || name.trim() === "") {
+                document.getElementById("name-error").textContent = "Имя обязательно";
+                isValid = false;
+            }
+
+            // Проверка email на наличие @ и точки
+            if (!email || email.indexOf("@") === -1 || email.indexOf(".") === -1) {
+                document.getElementById("email-error").textContent = "Некорректный email";
+                isValid = false;
+            }
+
+            // Проверка длины пароля (не менее 6 символов)
+            if (!password || password.length < 6) {
+                document.getElementById("password-error").textContent = "Пароль не менее 6 символов";
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        // Шаг 5: Функция добавления обработчика удаления элементов
+        function addDeleteHandler(item) {
+            item.addEventListener("click", function() {
+                this.remove(); // Удаляем элемент при клике
+            });
+        }
+
+        // Применяем удаление к уже имеющимся элементам списка
+        let existingItems = document.querySelectorAll("#user-list li");
+        existingItems.forEach(addDeleteHandler);
+
+        // Шаг 4: Обработка отправки формы
+        let form = document.getElementById("register-form");
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault(); // Отменяем перезагрузку страницы
+
+            // Получаем значения из полей формы
+            let name = document.getElementById("name").value;
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+
+            // Шаг 6: Вывод информации в консоль для отладки
+            console.log("Значение имени:", name);
+
+            // Вызов функции валидации
+            if (!validateForm(name, email, password)) {
+                return; // Останавливаем выполнение, если валидация не пройдена
+            }
+
+            // Если данные верны, создаем и добавляем новый элемент в список
+            let userList = document.getElementById("user-list");
+            let listItem = document.createElement("li");
+            listItem.textContent = name + " (" + email + ")";
+            
+            // Навешиваем обработчик удаления на новый элемент
+            addDeleteHandler(listItem);
+
+            userList.appendChild(listItem);
+
+            // Очищаем поля формы
+            document.getElementById("name").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("password").value = "";
+        });
+    </script>
+</body>
+</html>
