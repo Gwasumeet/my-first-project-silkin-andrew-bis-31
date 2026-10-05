@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация с API</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; max-width: 500px; }
+        div { margin-bottom: 12px; }
+        label { display: block; margin-bottom: 4px; font-weight: bold; }
+        input { width: 100%; padding: 8px; box-sizing: border-box; }
+        .error { color: red; font-size: 0.9em; display: block; margin-top: 4px; }
+        .loading { color: blue; font-size: 0.9em; font-weight: bold; }
+        button { padding: 10px 15px; cursor: pointer; }
+        ul { list-style: none; padding: 0; }
+        li { padding: 8px; border-bottom: 1px solid #ccc; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        li:hover { background: #f0f0f0; }
+    </style>
+</head>
+<body>
+    <h1>Регистрация</h1>
+    <form id="register-form">
+        <div>
+            <label for="name">Имя:</label>
+            <input type="text" id="name" required>
+            <span class="error" id="name-error"></span>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+            <span class="error" id="email-error"></span>
+        </div>
+        <button type="submit" id="submit-btn">Зарегистрироваться</button>
+        <span id="form-message" class="loading"></span>
+    </form>
+
+    <h2>Список пользователей</h2>
+    <div id="loading-users" class="loading">Загрузка...</div>
+    <ul id="user-list"></ul>
+
+    <script src="script.js"></script>
+</body>
+</html>
